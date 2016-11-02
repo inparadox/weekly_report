@@ -1,103 +1,73 @@
-10월 12일 수요일 프로젝트 일지
-디지털 포렌식 트랙 정다안
+10월 29일 ~ 11월
+주간보고서
+디지털포렌식 트랙 정다안
+
+[TOC]
+## 1. BISC 준비 문제출제
+
+
+![스크린샷 2016-10-30 오후 9.15.07.png](/Users/dan/Desktop/스크린샷 2016-10-30 오후 9.15.07.png)
+
+[10월 29일~ 10월 30일]
 ```
-#!/usr/bin/python
-from scapy import *
-import re
-import sqlite3
-import requests
-
-
-#con sqlite3.connect("./kakatalk.db")
-
-GET_re = re.compile("GET ([a-zA-Z0-9\/+?/._]+) HTTP/1.1\r\n")
-HOST_re = re.compile("Host: ((http://)?(th-)?p.talk.kakao.co.kr)\r\n")
-#sqlite3.connect("./kakatalk.db")
-kakao_re = re.compile("http://(th-)?p.talk.kakao.co.kr")
-#(th/)?talkp/[0-9a-zA-Z]{10}/[0-9a-zA-Z]{22}/[0-9a-zA-Z_]{16}.jpg
-
-remove_duplicate = {} # remove duplicate requests
-
-def http_header(packet):
-    str_pkt = str(packet)
-    #a = GET_re.findall("GET th/talkp/wksCVVLDGd/EPc2iXgCMBCg0S75Be6S80/1obrnl_940x940_s.jpg HTTP/1.1\r\n")
-    ##b = HOST_re.findall("Host: http://p.talk.kakao.co.kr\x0d\x0a")
-    #print a.group(0)
-    #print b.group(0)
-    matched_GET = GET_re.findall(str_pkt)
-    matched_HOST = HOST_re.findall(str_pkt)
-    
-    global remove_duplicate
-
-    if len(matched_GET) != 0 and len(matched_HOST) != 0:
-        matched_url2 = matched_GET[0]
-        matched_url1 = matched_HOST[0][0]
-
-        full_url = matched_url1 + matched_url2
-
-        if full_url not in remove_duplicate.keys():
-            remove_duplicate[full_url] = 1
-            
-            fName_idx = full_url.rfind("/")
-            filename = full_url[ fName_idx+1 : ]
-            print full_url
-            download_kakao_jpg(full_url, filename)
-
-    else:
-        pass
-        #print "No KaKao"
-
-
-def download_kakao_jpg(full_url, filename):
-
-
-    if full_url.find("http://") == -1:
-        full_url = "http://" + full_url
-
-    requester = requests.get(full_url);
-    
-    with open("./" + filename, "wb") as f:
-        f.write(requester.content)
-    print "Success"
-    
-"""
-def GET_print(packet1):
-        http_GET_packet = str(packet1)
-        http_get_packet_list = http_GET_packet.split("\r\n")
-        for extrect_packet_line in http_get_packet_list:
-                http_packet_host_len = extrect_packet_line.find('Host:')
-                if -1 != http_packet_host_len:
-                    m = p.match(extrect_packet_line[http_packet_host_len+5:].strip())
-                    if m is not None:
-                        saveurl = m.group()
-                        print saveurl
-                        cursor = con.cursor()
-                        cursor.execute("insert into kakaourl (url) values (\'" + saveurl + "\');")
-                        con.commit()
-                    else:
-                        print('No Kakao')
-
-"""
-sniff(iface= "ens0", prn=http_header, filter="tcp port 80")
-```
-카카오톡 url 코드 다시 만들었습니다.
-url 파일을 저장하는 코드가 추가되었습니다.
-
-sqlite3를 이용하여 데이터 베이스와 테이블을 만들었습니다.
-```
-CREATE TABLE kakao (
-   ...> kakaourl VARCHAR2(40)
-   ...> );
+BISC 문제 1번 2번 완료
+3번 공유기세팅 필요 세팅하면 문제 완료
+4번 시나리오만 완성됨 
 ```
 
-sqlite에 저장하기위하여 test로 저장하는 코드를 짰습니다.
+## 2. 안드로이드 개발 공부
 
-```
-import sqlite3
-i = "daan"
-con sqlite3.connect("./kakaourl.db")
-cursor = con.cursor()
-cursor.execute("insert into kakaourl (url) values (\'" + i + "\');")
-con.commit()
-```
-코드는 모두 라즈베리파이에서 작업하였습니다.
+결론: 블루투스 연결하여 패킷수집이 매우 힘듬 ㅠㅠ 
+
+앱은 
+메인 엑티비티에 블루투스 연결하는 버튼을 만들고
+그 버튼을 만들면 안드로이드 블루투스 연결페이지 에 액티비티 넘김
+뒤로넘어와서
+블루투스 연결이 확인되게하고
+
+블루투스로 
+그전에 블루투스연결
+일단 아이피주소 입력칸입력할 수 있게
+텍스트 어플라이해서 
+라즈베리파이에 적용
+
+라즈베리파이에서 블루투스패킷을 받으면
+일단 블루투스 모듈~
+
+라즈베리파이에서 해야할 것이 어려움...
+
+
+##3. 11월 3일 블루투스  
+블루투스 문제는 기기를 못찾는것..
+root@kali:~# bluetoothctl
+[bluetooth]# list
+[bluetooth]# help
+Available commands:
+	list     	List available controllers
+	show [ctrl]	Controller information
+	select <ctrl>	Select default controller
+	devices     	List available devices
+	power <on/off>	Set controller power
+	pairable <on/off>	Set controller pairable mode
+	discoverable <on/off>	Set controller discoverable mode
+	agent <on/off>	Enable/disable agent
+	scan <on/off>	Scan for devices
+	info <dev>	Device information
+	pair <dev>	Pair with device
+	trust <dev>	Trust device
+	remove <dev>	Remove device
+	connect <dev>	Connect device
+	disconnect <dev>	Disconnect device
+	version     	Display version
+	quit     	Quit program
+[bluetooth]# power on
+No default controller available
+[bluetooth]# power on
+No default controller available
+[bluetooth]# 
+
+
+
+
+
+
