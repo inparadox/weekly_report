@@ -38,34 +38,35 @@ BISC 문제 1번 2번 완료
 
 
 ##3. 11월 3일 블루투스  
-블루투스 문제는 기기를 못찾는것..
-root@kali:~# bluetoothctl
-[bluetooth]# list
-[bluetooth]# help
-Available commands:
-	list     	List available controllers
-	show [ctrl]	Controller information
-	select <ctrl>	Select default controller
-	devices     	List available devices
-	power <on/off>	Set controller power
-	pairable <on/off>	Set controller pairable mode
-	discoverable <on/off>	Set controller discoverable mode
-	agent <on/off>	Enable/disable agent
-	scan <on/off>	Scan for devices
-	info <dev>	Device information
-	pair <dev>	Pair with device
-	trust <dev>	Trust device
-	remove <dev>	Remove device
-	connect <dev>	Connect device
-	disconnect <dev>	Disconnect device
-	version     	Display version
-	quit     	Quit program
-[bluetooth]# power on
-No default controller available
-[bluetooth]# power on
-No default controller available
-[bluetooth]# 
-
+블루투스 문제는 기기를 못찾는것..  
+```{r, engine='bash', count_lines}
+root@kali:~# bluetoothctl  
+[bluetooth]# list  
+[bluetooth]# help  
+Available commands:  
+	list     	List available controllers  
+	show [ctrl]	Controller information  
+	select <ctrl>	Select default controller  
+	devices     	List available devices  
+	power <on/off>	Set controller power  
+	pairable <on/off>	Set controller pairable mode  
+	discoverable <on/off>	Set controller discoverable mode  
+	agent <on/off>	Enable/disable agent  
+	scan <on/off>	Scan for devices  
+	info <dev>	Device information  
+	pair <dev>	Pair with device  
+	trust <dev>	Trust device  
+	remove <dev>	Remove device  
+	connect <dev>	Connect device  
+	disconnect <dev>	Disconnect device  
+	version     	Display version  
+	quit     	Quit program  
+[bluetooth]# power on  
+No default controller available  
+[bluetooth]# power on  
+No default controller available  
+[bluetooth]#  
+```
 
 
 
